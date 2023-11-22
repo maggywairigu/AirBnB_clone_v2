@@ -1,0 +1,12 @@
+*~
+tests/test_models/__pycache__
+tests/test_models/test_engine/__pycache__
+.idea/*
+file.json
+test_params_create
+models/__pycache__
+models/engine/__pycache__
+tests/__pycache__
+__pycache__
+
+main_delete.py
