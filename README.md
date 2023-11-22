@@ -1,142 +1,85 @@
-<center> <h1>HBNB - The Console</h1> </center>
+The Cmd class provides a simple framework for writing line-oriented command interpreters. These are often useful for test harnesses, administrative tools, and prototypes that will later be wrapped in a more sophisticated interface.
 
-This repository contains the initial stage of a student project to build a clone of the AirBnB website. This stage implements a backend interface, or console, to manage program data. Console commands allow the user to create, update, and destroy objects, as well as manage file storage. Using a system of JSON serialization/deserialization, storage is persistent between sessions.
+class cmd.Cmd(completekey='tab', stdin=None, stdout=None)
+A Cmd instance or subclass instance is a line-oriented interpreter framework. There is no good reason to instantiate Cmd itself; rather, it’s useful as a superclass of an interpreter class you define yourself in order to inherit Cmd’s methods and encapsulate action methods.
 
----
+The optional argument completekey is the readline name of a completion key; it defaults to Tab. If completekey is not None and readline is available, command completion is done automatically.
 
-<center><h3>Repository Contents by Project Task</h3> </center>
+The optional arguments stdin and stdout specify the input and output file objects that the Cmd instance or subclass instance will use for input and output. If not specified, they will default to sys.stdin and sys.stdout.
 
-| Tasks | Files | Description |
-| ----- | ----- | ------ |
-| 0: Authors/README File | [AUTHORS](https://github.com/justinmajetich/AirBnB_clone/blob/dev/AUTHORS) | Project authors |
-| 1: Pep8 | N/A | All code is pep8 compliant|
-| 2: Unit Testing | [/tests](https://github.com/justinmajetich/AirBnB_clone/tree/dev/tests) | All class-defining modules are unittested |
-| 3. Make BaseModel | [/models/base_model.py](https://github.com/justinmajetich/AirBnB_clone/blob/dev/models/base_model.py) | Defines a parent class to be inherited by all model classes|
-| 4. Update BaseModel w/ kwargs | [/models/base_model.py](https://github.com/justinmajetich/AirBnB_clone/blob/dev/models/base_model.py) | Add functionality to recreate an instance of a class from a dictionary representation|
-| 5. Create FileStorage class | [/models/engine/file_storage.py](https://github.com/justinmajetich/AirBnB_clone/blob/dev/models/engine/file_storage.py) [/models/_ _init_ _.py](https://github.com/justinmajetich/AirBnB_clone/blob/dev/models/__init__.py) [/models/base_model.py](https://github.com/justinmajetich/AirBnB_clone/blob/dev/models/base_model.py) | Defines a class to manage persistent file storage system|
-| 6. Console 0.0.1 | [console.py](https://github.com/justinmajetich/AirBnB_clone/blob/dev/console.py) | Add basic functionality to console program, allowing it to quit, handle empty lines and ^D |
-| 7. Console 0.1 | [console.py](https://github.com/justinmajetich/AirBnB_clone/blob/dev/console.py) | Update the console with methods allowing the user to create, destroy, show, and update stored data |
-| 8. Create User class | [console.py](https://github.com/justinmajetich/AirBnB_clone/blob/dev/console.py) [/models/engine/file_storage.py](https://github.com/justinmajetich/AirBnB_clone/blob/dev/models/engine/file_storage.py) [/models/user.py](https://github.com/justinmajetich/AirBnB_clone/blob/dev/models/user.py) | Dynamically implements a user class |
-| 9. More Classes | [/models/user.py](https://github.com/justinmajetich/AirBnB_clone/blob/dev/models/user.py) [/models/place.py](https://github.com/justinmajetich/AirBnB_clone/blob/dev/models/place.py) [/models/city.py](https://github.com/justinmajetich/AirBnB_clone/blob/dev/models/city.py) [/models/amenity.py](https://github.com/justinmajetich/AirBnB_clone/blob/dev/models/amenity.py) [/models/state.py](https://github.com/justinmajetich/AirBnB_clone/blob/dev/models/state.py) [/models/review.py](https://github.com/justinmajetich/AirBnB_clone/blob/dev/models/review.py) | Dynamically implements more classes |
-| 10. Console 1.0 | [console.py](https://github.com/justinmajetich/AirBnB_clone/blob/dev/console.py) [/models/engine/file_storage.py](https://github.com/justinmajetich/AirBnB_clone/blob/dev/models/engine/file_storage.py) | Update the console and file storage system to work dynamically with all  classes update file storage |
-<br>
-<br>
-<center> <h2>General Use</h2> </center>
+If you want a given stdin to be used, make sure to set the instance’s use_rawinput attribute to False, otherwise stdin will be ignored.
+QLAlchemy Core
+The breadth of SQLAlchemy’s SQL rendering engine, DBAPI integration, transaction integration, and schema description services are documented here. In contrast to the ORM’s domain-centric mode of usage, the SQL Expression Language provides a schema-centric usage paradigm.
 
-1. First clone this repository.
+Read this first: SQL Expression Language Tutorial
 
-3. Once the repository is cloned locate the "console.py" file and run it as follows:
-```
-/AirBnB_clone$ ./console.py
-```
-4. When this command is run the following prompt should appear:
-```
-(hbnb)
-```
-5. This prompt designates you are in the "HBnB" console. There are a variety of commands available within the console program.
+All the Built In SQL: SQL Expression API
 
-##### Commands
-    * create - Creates an instance based on given class
+Engines, Connections, Pools: Engine Configuration | Connections, Transactions | Connection Pooling
 
-    * destroy - Destroys an object based on class and UUID
+Schema Definition: Overview | Tables and Columns | Database Introspection (Reflection) | Insert/Update Defaults | Constraints and Indexes | Using Data Definition Language (DDL)
 
-    * show - Shows an object based on class and UUID
+Datatypes: Overview | Building Custom Types | API
 
-    * all - Shows all objects the program has access to, or all objects of a given class
+Core Basics: Overview | Runtime Inspection API | Event System | Core Event Interfaces | Creating Custom SQL Constructs |
 
-    * update - Updates existing attributes an object based on class name and UUID
+Dialect Documentation
+13.1.2 ALTER DATABASE Statement
+ALTER {DATABASE | SCHEMA} [db_name]
+    alter_option ...
 
-    * quit - Exits the program (EOF will as well)
+alter_option: {
+    [DEFAULT] CHARACTER SET [=] charset_name
+  | [DEFAULT] COLLATE [=] collation_name
+  | [DEFAULT] ENCRYPTION [=] {'Y' | 'N'}
+  | READ ONLY [=] {DEFAULT | 0 | 1}
+}
+ALTER DATABASE enables you to change the overall characteristics of a database. These characteristics are stored in the data dictionary. This statement requires the ALTER privilege on the database. ALTER SCHEMA is a synonym for ALTER DATABASE.
 
+If the database name is omitted, the statement applies to the default database. In that case, an error occurs if there is no default database.
 
-##### Alternative Syntax
-Users are able to issue a number of console command using an alternative syntax:
+For any alter_option omitted from the statement, the database retains its current option value, with the exception that changing the character set may change the collation and vice versa.
 
-	Usage: <class_name>.<command>([<id>[name_arg value_arg]|[kwargs]])
-Advanced syntax is implemented for the following commands: 
+Character Set and Collation Options
 
-    * all - Shows all objects the program has access to, or all objects of a given class
+Encryption Option
 
-	* count - Return number of object instances by class
+Read Only Option
 
-    * show - Shows an object based on class and UUID
+Character Set and Collation Options
+The CHARACTER SET option changes the default database character set. The COLLATE option changes the default database collation. For information about character set and collation names, see Chapter 10, Character Sets, Collations, Unicode.
 
-	* destroy - Destroys an object based on class and UUID
+To see the available character sets and collations, use the SHOW CHARACTER SET and SHOW COLLATION statements, respectively. See Section 13.7.7.3, “SHOW CHARACTER SET Statement”, and Section 13.7.7.4, “SHOW COLLATION Statement”.
 
-    * update - Updates existing attributes an object based on class name and UUID
+A stored routine that uses the database defaults when the routine is created includes those defaults as part of its definition. (In a stored routine, variables with character data types use the database defaults if the character set or collation are not specified explicitly. See Section 13.1.17, “CREATE PROCEDURE and CREATE FUNCTION Statements”.) If you change the default character set or collation for a database, any stored routines that are to use the new defaults must be dropped and recreated.
 
-<br>
-<br>
-<center> <h2>Examples</h2> </center>
-<h3>Primary Command Syntax</h3>
+Encryption Option
+The ENCRYPTION option, introduced in MySQL 8.0.16, defines the default database encryption, which is inherited by tables created in the database. The permitted values are 'Y' (encryption enabled) and 'N' (encryption disabled).
 
-###### Example 0: Create an object
-Usage: create <class_name>
-```
-(hbnb) create BaseModel
-```
-```
-(hbnb) create BaseModel
-3aa5babc-efb6-4041-bfe9-3cc9727588f8
-(hbnb)                   
-```
-###### Example 1: Show an object
-Usage: show <class_name> <_id>
+The mysql system schema cannot be set to default encryption. The existing tables within it are part of the general mysql tablespace, which may be encrypted. The information_schema contains only views. It is not possible to create any tables within it. There is nothing on the disk to encrypt. All tables in the performance_schema use the PERFORMANCE_SCHEMA engine, which is purely in-memory. It is not possible to create any other tables in it. There is nothing on the disk to encrypt.
 
-```
-(hbnb) show BaseModel 3aa5babc-efb6-4041-bfe9-3cc9727588f8
-[BaseModel] (3aa5babc-efb6-4041-bfe9-3cc9727588f8) {'id': '3aa5babc-efb6-4041-bfe9-3cc9727588f8', 'created_at': datetime.datetime(2020, 2, 18, 14, 21, 12, 96959), 
-'updated_at': datetime.datetime(2020, 2, 18, 14, 21, 12, 96971)}
-(hbnb)  
-```
-###### Example 2: Destroy an object
-Usage: destroy <class_name> <_id>
-```
-(hbnb) destroy BaseModel 3aa5babc-efb6-4041-bfe9-3cc9727588f8
-(hbnb) show BaseModel 3aa5babc-efb6-4041-bfe9-3cc9727588f8
-** no instance found **
-(hbnb)   
-```
-###### Example 3: Update an object
-Usage: update <class_name> <_id>
-```
-(hbnb) update BaseModel b405fc64-9724-498f-b405-e4071c3d857f first_name "person"
-(hbnb) show BaseModel b405fc64-9724-498f-b405-e4071c3d857f
-[BaseModel] (b405fc64-9724-498f-b405-e4071c3d857f) {'id': 'b405fc64-9724-498f-b405-e4071c3d857f', 'created_at': datetime.datetime(2020, 2, 18, 14, 33, 45, 729889), 
-'updated_at': datetime.datetime(2020, 2, 18, 14, 33, 45, 729907), 'first_name': 'person'}
-(hbnb)
-```
-<h3>Alternative Syntax</h3>
+Only newly created tables inherit the default database encryption. For existing tables associated with the database, their encryption remains unchanged. If the table_encryption_privilege_check system variable is enabled, the TABLE_ENCRYPTION_ADMIN privilege is required to specify a default encryption setting that differs from the value of the default_table_encryption system variable. For more information, see Defining an Encryption Default for Schemas and General Tablespaces.
 
-###### Example 0: Show all User objects
-Usage: <class_name>.all()
-```
-(hbnb) User.all()
-["[User] (99f45908-1d17-46d1-9dd2-b7571128115b) {'updated_at': datetime.datetime(2020, 2, 19, 21, 47, 34, 92071), 'id': '99f45908-1d17-46d1-9dd2-b7571128115b', 'created_at': datetime.datetime(2020, 2, 19, 21, 47, 34, 92056)}", "[User] (98bea5de-9cb0-4d78-8a9d-c4de03521c30) {'updated_at': datetime.datetime(2020, 2, 19, 21, 47, 29, 134362), 'id': '98bea5de-9cb0-4d78-8a9d-c4de03521c30', 'created_at': datetime.datetime(2020, 2, 19, 21, 47, 29, 134343)}"]
-```
+Read Only Option
+The READ ONLY option, introduced in MySQL 8.0.22, controls whether to permit modification of the database and objects within it. The permitted values are DEFAULT or 0 (not read only) and 1 (read only). This option is useful for database migration because a database for which READ ONLY is enabled can be migrated to another MySQL instance without concern that the database might be changed during the operation.
 
-###### Example 1: Destroy a User
-Usage: <class_name>.destroy(<_id>)
-```
-(hbnb) User.destroy("99f45908-1d17-46d1-9dd2-b7571128115b")
-(hbnb)
-(hbnb) User.all()
-(hbnb) ["[User] (98bea5de-9cb0-4d78-8a9d-c4de03521c30) {'updated_at': datetime.datetime(2020, 2, 19, 21, 47, 29, 134362), 'id': '98bea5de-9cb0-4d78-8a9d-c4de03521c30', 'created_at': datetime.datetime(2020, 2, 19, 21, 47, 29, 134343)}"]
-```
-###### Example 2: Update User (by attribute)
-Usage: <class_name>.update(<_id>, <attribute_name>, <attribute_value>)
-```
-(hbnb) User.update("98bea5de-9cb0-4d78-8a9d-c4de03521c30", name "Todd the Toad")
-(hbnb)
-(hbnb) User.all()
-(hbnb) ["[User] (98bea5de-9cb0-4d78-8a9d-c4de03521c30) {'updated_at': datetime.datetime(2020, 2, 19, 21, 47, 29, 134362), 'id': '98bea5de-9cb0-4d78-8a9d-c4de03521c30', 'name': 'Todd the Toad', 'created_at': datetime.datetime(2020, 2, 19, 21, 47, 29, 134343)}"]
-```
-###### Example 3: Update User (by dictionary)
-Usage: <class_name>.update(<_id>, <dictionary>)
-```
-(hbnb) User.update("98bea5de-9cb0-4d78-8a9d-c4de03521c30", {'name': 'Fred the Frog', 'age': 9})
-(hbnb)
-(hbnb) User.all()
-(hbnb) ["[User] (98bea5de-9cb0-4d78-8a9d-c4de03521c30) {'updated_at': datetime.datetime(2020, 2, 19, 21, 47, 29, 134362), 'name': 'Fred the Frog', 'age': 9, 'id': '98bea5de-9cb0-4d78-8a9d-c4de03521c30', 'created_at': datetime.datetime(2020, 2, 19, 21, 47, 29, 134343)}"]
-```
-<br>
+With NDB Cluster, making a database read only on one mysqld server is synchronized to other mysqld servers in the same cluster, so that the database becomes read only on all mysqld servers.
+
+The READ ONLY option, if enabled, is displayed in the INFORMATION_SCHEMA SCHEMATA_EXTENSIONS table. See Section 26.3.32, “The INFORMATION_SCHEMA SCHEMATA_EXTENSIONS Table”.
+
+The READ ONLY option cannot be enabled for these system schemas: mysql, information_schema, performance_schema.
+
+In ALTER DATABASE statements, the READ ONLY option interacts with other instances of itself and with other options as follows:
+
+An error occurs if multiple instances of READ ONLY conflict (for example, READ ONLY = 1 READ ONLY = 0).
+
+An ALTER DATABASE statement that contains only (nonconflicting) READ ONLY options is permitted even for a read-only database.
+
+A mix of (nonconflicting) READ ONLY options with other options is permitted if the read-only state of the database either before or after the statement permits modifications. If the read-only state both before and after prohibits changes, an error occurs.
+
+This statement succeeds whether or not the database is read only:
+
+ALTER DATABASE mydb READ ONLY = 0 DEFAULT COLLATE utf8mb4_bin;
+This statement succeeds if the database is not read only, but fails if it is already read only:
+
+ALTE
