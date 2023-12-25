@@ -1,12 +1,14 @@
-from flask import flask
-app = flask(__name__)
+#!/usr/bin/python3
+""" Starts a Flash Web Application """
+from flask import Flask
+app = Flask(__name__)
 
-@app.route('/')
-@app.route('/hello')
-def Helloworld():
-    return "Hello World"
 
-if __name__ == '__main__';
-    app.debug = True
-    app.run(host = '0.0.0.0', port = 5000)
+@app.route('/', strict_slashes=False)
+def hello_hbnb():
+    """ Prints a Message when / is called """
+    return 'Hello HBNB!'
 
+if __name__ == "__main__":
+    """ Main Function """
+    app.run(host='0.0.0.0', port=5000)
