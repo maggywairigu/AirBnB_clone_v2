@@ -1,4 +1,4 @@
-#!/usr/bin/pyhton3
+#!/usr/bin/python3
 """
 starts a Flask web application:
 listening on 0.0.0.0, port 5000
